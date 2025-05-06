@@ -4,6 +4,7 @@ on:
   schedule:
     # Trigger every minute
     - cron: "*/1 * * * *"
+  workflow_dispatch:
 
 jobs:
   rss-fetcher:
