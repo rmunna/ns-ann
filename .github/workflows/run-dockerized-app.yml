@@ -3,7 +3,7 @@ name: NSE RSS Fetcher
 on:
   schedule:
     # Trigger every minute
-    - cron: "*/1 * * * *"
+    #- cron: "*/1 * * * *"
   workflow_dispatch:
 
 jobs:
