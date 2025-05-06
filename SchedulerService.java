@@ -19,6 +19,7 @@ public class SchedulerService {
     }
 
     public void processRssFeed() {
+        System.out.println("Process feed ");
         List<RssItem> rssItems = rssFetcherService.fetchRssFeed();
         for (RssItem item : rssItems) {
             String message = "Title: " + item.getTitle() + "\n" +
