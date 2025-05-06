@@ -37,4 +37,4 @@ jobs:
 
       # Step 5: Run the application
       - name: Run the application
-        run: java -jar target/ns-ann-1.0.0.jar
+        run: java -jar target/ns-ann-1.0.0.jar processRssFeed
