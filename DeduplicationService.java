@@ -1,3 +1,4 @@
+
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -6,7 +7,7 @@ import java.nio.file.Paths;
 
 @Service
 public class DeduplicationService {
-    private static final String LAST_MESSAGE_FILE = "last-message.txt";
+    private static final String DEDUPLICATION_FILE = "deduplication.txt";
     private String lastMessageContent = null;
 
     public DeduplicationService() {
@@ -14,12 +15,9 @@ public class DeduplicationService {
     }
 
     public boolean isDuplicate(String currentMessage) {
-        // If the current message matches the last message content, it's a duplicate
         if (currentMessage.equals(lastMessageContent)) {
             return true;
         }
-
-        // Update the last message and save it to the file
         lastMessageContent = currentMessage;
         saveLastMessage();
         return false;
@@ -27,8 +25,8 @@ public class DeduplicationService {
 
     private void loadLastMessage() {
         try {
-            if (Files.exists(Paths.get(LAST_MESSAGE_FILE))) {
-                lastMessageContent = new String(Files.readAllBytes(Paths.get(LAST_MESSAGE_FILE)));
+            if (Files.exists(Paths.get(DEDUPLICATION_FILE))) {
+                lastMessageContent = new String(Files.readAllBytes(Paths.get(DEDUPLICATION_FILE)));
             }
         } catch (IOException e) {
             System.err.println("Failed to load last message: " + e.getMessage());
@@ -36,10 +34,10 @@ public class DeduplicationService {
     }
 
     private void saveLastMessage() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LAST_MESSAGE_FILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEDUPLICATION_FILE))) {
             writer.write(lastMessageContent);
         } catch (IOException e) {
-            System.err.println("Failed to save last message: " + e.getMessage());
+            System.err.println("Failed to save the last message: " + e.getMessage());
         }
     }
 }
