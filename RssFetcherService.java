@@ -30,6 +30,7 @@ public class RssFetcherService {
                 Element item = (Element) itemList.item(i);
                 String title = item.getElementsByTagName("title").item(0).getTextContent();
                 String link = item.getElementsByTagName("link").item(0).getTextContent();
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
                 String description = item.getElementsByTagName("description").item(0).getTextContent();
 
                 if (title.contains("Financial Result")) {
