@@ -1,4 +1,3 @@
-package com.example.nsann.scheduler;
 
 import com.example.nsann.service.RssFetcherService;
 import com.example.nsann.service.DeduplicationService;
