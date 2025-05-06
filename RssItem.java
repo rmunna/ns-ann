@@ -1,4 +1,3 @@
-package com.example.nsann.model;
 
 public class RssItem {
     private String title;
