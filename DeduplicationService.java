@@ -1,43 +1,49 @@
-
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class DeduplicationService {
     private static final String DEDUPLICATION_FILE = "deduplication.txt";
-    private String lastMessageContent = null;
+    private Set<String> processedMessages = new HashSet<>();
 
     public DeduplicationService() {
-        loadLastMessage();
+        loadProcessedMessages();
     }
 
-    public boolean isDuplicate(String currentMessage) {
-        if (currentMessage.equals(lastMessageContent)) {
+    public boolean isDuplicate(String title, String pubDate) {
+        // Create a unique identifier for the message based on title and pubDate
+        String uniqueMessageKey = title + "|" + pubDate;
+        if (processedMessages.contains(uniqueMessageKey)) {
             return true;
         }
-        lastMessageContent = currentMessage;
-        saveLastMessage();
+        processedMessages.add(uniqueMessageKey);
+        saveProcessedMessages();
         return false;
     }
 
-    private void loadLastMessage() {
+    private void loadProcessedMessages() {
         try {
             if (Files.exists(Paths.get(DEDUPLICATION_FILE))) {
-                lastMessageContent = new String(Files.readAllBytes(Paths.get(DEDUPLICATION_FILE)));
+                processedMessages.addAll(Files.readAllLines(Paths.get(DEDUPLICATION_FILE)));
             }
         } catch (IOException e) {
-            System.err.println("Failed to load last message: " + e.getMessage());
+            System.err.println("Failed to load processed messages: " + e.getMessage());
         }
     }
 
-    private void saveLastMessage() {
+    private void saveProcessedMessages() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEDUPLICATION_FILE))) {
-            writer.write(lastMessageContent);
+            for (String message : processedMessages) {
+                writer.write(message);
+                writer.newLine();
+            }
         } catch (IOException e) {
-            System.err.println("Failed to save the last message: " + e.getMessage());
+            System.err.println("Failed to save processed messages: " + e.getMessage());
         }
     }
 }
