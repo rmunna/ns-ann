@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class RssFetcherService {
-    private final String RSS_FEED_URL = "https://www.nseindia.com/rss.xml";
+    private final String RSS_FEED_URL = "https://nsearchives.nseindia.com/content/RSS/Financial_Results.xml";
 
     public List<RssItem> fetchRssFeed() {
         List<RssItem> rssItems = new ArrayList<>();
